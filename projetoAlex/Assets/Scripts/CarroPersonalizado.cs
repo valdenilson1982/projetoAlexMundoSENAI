@@ -61,11 +61,28 @@ public class CarroPersonalizado : MonoBehaviour
 
     public float r;
 
+    public GameObject[] mensagens;
+    public GameObject[] pontosMissoes;
+
+
+    public int indexMissoes;
+
+    private numeroMissao missao;
+
+    public int numeroMissaoAtual;
+
+    public GameObject start;
+
+    private int speedInicial;
+
     void Start()
     {
         rbCar = GetComponent<Rigidbody>();
         //  rbCar.ResetCenterOfMass();
          rbCar.centerOfMass = centerOfMass.localPosition;
+        missao = FindObjectOfType(typeof(numeroMissao)) as numeroMissao;
+        speedInicial = 0;
+        // Time.timeScale = 0;
 
     }
 
@@ -82,6 +99,7 @@ public class CarroPersonalizado : MonoBehaviour
         AnimationWhees();
         Turn();
         SetBreak();
+        Missoes();
     }
     #region MEUS MÉTODOS
     private void GetInput()
@@ -103,15 +121,13 @@ public class CarroPersonalizado : MonoBehaviour
     private void SetTorque()
     {
 
-        speed = rbCar.velocity.magnitude * 3.6f;
+        speed = rbCar.velocity.magnitude * 3.6f * speedInicial;
 
         speedText.text = speed.ToString("N0") + "km/h";
 
         if (speed >= maxSpeed) { torque = 0; }
 
         rbCar.AddForce(Vector3.down * downForce * speed);
-
-
 
 
         if (driveType == DriverType.Full)
@@ -129,7 +145,7 @@ public class CarroPersonalizado : MonoBehaviour
             {
                 case DriverType.Full:
 
-                    w.collider.motorTorque = input.y * torque;
+                    w.collider.motorTorque = input.y * torque * speedInicial;
 
                     break;
 
@@ -137,22 +153,17 @@ public class CarroPersonalizado : MonoBehaviour
 
                     if (w.axel == Axel.Front)
                     {
-                        w.collider.motorTorque = input.y * torque;
+                        w.collider.motorTorque = input.y * torque * speedInicial;
                     }
-
                     break;
 
                 case DriverType.Rear:
 
                     if (w.axel == Axel.Rear)
                     {
-                        w.collider.motorTorque = input.y * torque;
+                        w.collider.motorTorque = input.y * torque * speedInicial;
                     }
-
                     break;
-
-
-
             }
         }
 
@@ -253,6 +264,60 @@ public class CarroPersonalizado : MonoBehaviour
 
         }
     }
+
+    void Missoes()
+    {
+        if(indexMissoes == 1)
+        {
+            mensagens[0].SetActive(false);
+            pontosMissoes[0].SetActive(true);
+            speedInicial = 1;
+            // pontosMissoes[1].SetActive(true);
+        }
+        else if (indexMissoes == 2)
+        {
+            mensagens[1].SetActive(false);
+            pontosMissoes[0].SetActive(false);
+            pontosMissoes[1].SetActive(true);
+        }else if (indexMissoes == 3)
+        {
+            mensagens[2].SetActive(false);
+            pontosMissoes[1].SetActive(false);
+            pontosMissoes[2].SetActive(true);
+        }else if(indexMissoes == 4)
+        {
+            mensagens[3].SetActive(false);
+            pontosMissoes[2].SetActive(false);
+            pontosMissoes[3].SetActive(true);
+        }else if(indexMissoes == 5) 
+        {
+            mensagens[4].SetActive(false);
+            pontosMissoes[3].SetActive(false);
+            pontosMissoes[4].SetActive(true);
+        }else if (indexMissoes == 6)
+        {
+            mensagens[4].SetActive(false);
+            pontosMissoes[4].SetActive(false);
+            pontosMissoes[3].SetActive(true);
+
+        }
+        else if(indexMissoes == 7)
+        {
+            start.SetActive(false);
+            mensagens[0].SetActive(true);
+
+   
+        }
+    }
     #endregion
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "missoes")
+        {
+            mensagens[1].SetActive(true);
+        }
+    }
 }
 

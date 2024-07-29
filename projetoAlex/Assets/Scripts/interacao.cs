@@ -5,14 +5,17 @@ using UnityEngine;
 public class interacao : MonoBehaviour
 {
     private bool isVerificarToque;
-    private Animator anim;
-    public string nomeAnimacao;
 
-    
+
+
+
+    public int indexMissoes;
+
+    private CarroPersonalizado _carroPersonalizado;
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();
+        _carroPersonalizado = FindObjectOfType(typeof(CarroPersonalizado)) as CarroPersonalizado;
     }
 
     // Update is called once per frame
@@ -22,9 +25,9 @@ public class interacao : MonoBehaviour
         {
             if (Input.GetButton("Fire1"))
             {
+                _carroPersonalizado.indexMissoes = indexMissoes;
 
-                anim.SetTrigger(nomeAnimacao);
-
+                Debug.Log(_carroPersonalizado.indexMissoes);
 
             }
         }
