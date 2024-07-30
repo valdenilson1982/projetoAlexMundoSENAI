@@ -37179,6 +37179,11 @@ MonoBehaviour:
   steerRadius: 5
   speedText: {fileID: 189409237}
   r: 0
+  mensagens: []
+  pontosMissoes: []
+  indexMissoes: 0
+  numeroMissaoAtual: 0
+  start: {fileID: 0}
 --- !u!23 &7827278051842803820
 MeshRenderer:
   m_ObjectHideFlags: 0

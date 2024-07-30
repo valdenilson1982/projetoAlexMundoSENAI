@@ -49,7 +49,7 @@ public class CarroPersonalizado : MonoBehaviour
 
     private bool isBraek;
 
-   public Transform centerOfMass;
+    public Transform centerOfMass;
 
     public float downForce;
     public float maxSpeed;
@@ -79,7 +79,7 @@ public class CarroPersonalizado : MonoBehaviour
     {
         rbCar = GetComponent<Rigidbody>();
         //  rbCar.ResetCenterOfMass();
-         rbCar.centerOfMass = centerOfMass.localPosition;
+        rbCar.centerOfMass = centerOfMass.localPosition;
         missao = FindObjectOfType(typeof(numeroMissao)) as numeroMissao;
         speedInicial = 0;
         // Time.timeScale = 0;
@@ -89,7 +89,7 @@ public class CarroPersonalizado : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetInput();
+        //GetInput();
 
     }
 
@@ -102,6 +102,7 @@ public class CarroPersonalizado : MonoBehaviour
         Missoes();
     }
     #region MEUS MÉTODOS
+   
     private void GetInput()
     {
         input.x = Input.GetAxis("Horizontal");
@@ -116,8 +117,61 @@ public class CarroPersonalizado : MonoBehaviour
             isBraek = false;
         }
     }
+    
+    public void InputXDirDown()
+    {
+
+        input.x = 1;
+    }
 
 
+    public void InputXDirUp()
+    {
+
+         input.x = 0;
+    }
+
+    public void InputXEsqDown()
+    {
+        input.x = -1;
+    }
+
+
+    public void InputXEsqUp()
+    {
+        input.x = 0;
+    }
+    public void InputYAceradorDown()
+    {
+        input.y = 1;
+    }
+
+    public void InputYAceradorUp()
+    {
+        input.y = 0;
+    }
+
+
+    public void InputYReDown()
+    {
+        input.y = -1;
+    }
+
+    public void InputYReUp()
+    {
+        input.y = 0;
+    }
+
+    public void IsBreakDown()
+    {
+        isBraek = true;
+    }
+
+    public void IsBreakUp()
+    {
+        isBraek = false;
+    }
+    
     private void SetTorque()
     {
 
