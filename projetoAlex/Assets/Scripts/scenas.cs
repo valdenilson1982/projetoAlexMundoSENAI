@@ -12,6 +12,6 @@ public class scenas : MonoBehaviour
 
     public void cena2()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("SampleSceneControle 2");
     }
 }
