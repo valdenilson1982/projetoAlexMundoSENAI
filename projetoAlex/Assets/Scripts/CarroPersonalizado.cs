@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 //using UnityEditor.U2D;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Jobs;
 //using UnityEditor.Experimental.GraphView;
 
 public enum Axel
@@ -75,6 +76,10 @@ public class CarroPersonalizado : MonoBehaviour
 
     private int speedInicial;
 
+    public Transform posicaoIniciar;
+
+    public bool iniciarJogo;
+
     void Start()
     {
         rbCar = GetComponent<Rigidbody>();
@@ -83,6 +88,16 @@ public class CarroPersonalizado : MonoBehaviour
         missao = FindObjectOfType(typeof(numeroMissao)) as numeroMissao;
         speedInicial = 0;
         // Time.timeScale = 0;
+        foreach (Wheel w in wheels)
+        {
+                 
+                w.collider.motorTorque = 0;
+        
+         
+                w.collider.brakeTorque = 0;
+
+        }
+        rbCar.isKinematic = true;
 
     }
 
@@ -326,6 +341,8 @@ public class CarroPersonalizado : MonoBehaviour
             mensagens[0].SetActive(false);
             pontosMissoes[0].SetActive(true);
             speedInicial = 1;
+            rbCar.isKinematic = false;
+           
             // pontosMissoes[1].SetActive(true);
         }
         else if (indexMissoes == 2)
@@ -372,6 +389,24 @@ public class CarroPersonalizado : MonoBehaviour
         {
             mensagens[1].SetActive(true);
         }
+    }
+
+    public void alvoEncontrdo()
+    {
+
+     
+        
+            rbCar.isKinematic = false;
+            rbCar.useGravity = true;
+            transform.position = posicaoIniciar.transform.position;
+       
+    }
+
+    public void alvoPerdido()
+    {
+        rbCar.isKinematic = true;
+        rbCar.useGravity = false;
+        transform.position = posicaoIniciar.transform.position;
     }
 }
 
